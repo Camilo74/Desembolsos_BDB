@@ -1,0 +1,402 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary)}
+.app{display:flex;flex-direction:column;gap:16px;padding:12px 0}
+.header{background:#1F3864;color:#fff;border-radius:var(--border-radius-lg);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:16px;font-weight:500}
+.header span{font-size:12px;opacity:0.8}
+.tabs{display:flex;gap:8px;border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:0}
+.tab{padding:8px 16px;cursor:pointer;border-radius:var(--border-radius-md) var(--border-radius-md) 0 0;font-size:13px;color:var(--color-text-secondary);border:0.5px solid transparent;border-bottom:none}
+.tab.active{background:var(--color-background-primary);border-color:var(--color-border-tertiary);color:var(--color-text-primary);font-weight:500}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:12px}
+.card-title{font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12px;color:var(--color-text-secondary)}
+.field input,.field select{width:100%;padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:13px}
+.btn-primary{background:#1F3864;color:#fff;border:none;border-radius:var(--border-radius-md);padding:9px 18px;cursor:pointer;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
+.btn-danger{background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:6px 10px;cursor:pointer;font-size:12px;color:var(--color-text-secondary)}
+.btn-danger:hover{color:#E24B4A;border-color:#E24B4A}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px}
+.metric .label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.metric .value{font-size:18px;font-weight:500}
+.metric .value.green{color:#1D9E75}
+.metric .value.blue{color:#185FA5}
+.metric .value.orange{color:#BA7517}
+.progress-bar{height:8px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden;margin:6px 0}
+.progress-fill{height:100%;border-radius:4px;background:#1F3864;transition:width 0.3s}
+.progress-fill.green{background:#1D9E75}
+.progress-fill.orange{background:#BA7517}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#1F3864;color:#fff;padding:8px 10px;text-align:left;font-weight:500;white-space:nowrap}
+td{padding:7px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary)}
+tr:nth-child(even) td{background:var(--color-background-secondary)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.badge.si{background:#EAF3DE;color:#3B6D11}
+.badge.fga{background:#FAEEDA;color:#854F0B}
+.badge.na{background:#F1EFE8;color:#5F5E5A}
+.section-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.section-row:last-child{border-bottom:none}
+.section-row .lbl{color:var(--color-text-secondary);font-size:13px}
+.section-row .val{font-weight:500;font-size:13px}
+.comision-total{background:#1E6B3C;color:#fff;border-radius:var(--border-radius-md);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.comision-total .lbl{font-size:13px;opacity:0.9}
+.comision-total .val{font-size:20px;font-weight:500}
+.aliado-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.aliado-row:last-child{border-bottom:none}
+.msg{padding:8px 12px;border-radius:var(--border-radius-md);font-size:13px;margin-bottom:10px}
+.msg.success{background:#EAF3DE;color:#3B6D11}
+.msg.error{background:#FCEBEB;color:#A32D2D}
+.empty{text-align:center;padding:32px;color:var(--color-text-secondary);font-size:13px}
+.config-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.config-row:last-child{border-bottom:none}
+.config-row label{font-size:13px;color:var(--color-text-secondary)}
+.config-row input{width:160px;padding:6px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:13px;text-align:right}
+.filter-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.filter-row select,.filter-row input{padding:6px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:12px}
+</style>
+
+<div class="app">
+  <div class="header">
+    <h1><i class="ti ti-chart-bar" aria-hidden="true"></i> Desembolsos Banco de Bogotá</h1>
+    <span id="mes-label">Mayo 2026</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('panel-registros')"><i class="ti ti-plus" aria-hidden="true"></i> Registrar</div>
+    <div class="tab" onclick="showTab('panel-tabla')"><i class="ti ti-list" aria-hidden="true"></i> Tabla</div>
+    <div class="tab" onclick="showTab('panel-panel')"><i class="ti ti-dashboard" aria-hidden="true"></i> Panel</div>
+    <div class="tab" onclick="showTab('panel-config')"><i class="ti ti-settings" aria-hidden="true"></i> Config</div>
+  </div>
+
+  <div id="panel-registros" class="panel active">
+    <div id="msg-area"></div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-file-plus" aria-hidden="true"></i> Nuevo desembolso</div>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field"><label>Fecha</label><input type="date" id="f-fecha"></div>
+        <div class="field"><label>Aliado</label>
+          <select id="f-aliado">
+            <option value="">Seleccionar...</option>
+            <option>Carrera Motos</option><option>Honda</option><option>Motored</option>
+            <option>KTM</option><option>Corbeta</option><option>Yamaha</option>
+            <option>Auteco</option><option>Naked</option><option>Guerrero</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field"><label>Cédula cliente</label><input type="number" id="f-cedula" placeholder="Número de cédula"></div>
+        <div class="field"><label>Monto ($)</label><input type="number" id="f-monto" placeholder="Ej: 15000000"></div>
+      </div>
+      <div class="grid3" style="margin-bottom:14px">
+        <div class="field"><label>Asesor aliado</label><input type="text" id="f-asesor" placeholder="Nombre"></div>
+        <div class="field"><label>CC aliado</label><input type="number" id="f-cc" placeholder="Cédula asesor"></div>
+        <div class="field"><label>FGA / Seguro</label>
+          <select id="f-fga">
+            <option value="N/A">N/A</option>
+            <option value="SI">SI</option>
+            <option value="FGA">FGA</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="agregarDesembolso()"><i class="ti ti-plus" aria-hidden="true"></i> Agregar desembolso</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-clock" aria-hidden="true"></i> Últimos registros</div>
+      <div id="ultimos-lista"></div>
+    </div>
+  </div>
+
+  <div id="panel-tabla" class="panel">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-filter" aria-hidden="true"></i> Filtros</div>
+      <div class="filter-row">
+        <select id="fil-aliado" onchange="renderTabla()">
+          <option value="">Todos los aliados</option>
+          <option>Carrera Motos</option><option>Honda</option><option>Motored</option>
+          <option>KTM</option><option>Corbeta</option><option>Yamaha</option>
+          <option>Auteco</option><option>Naked</option><option>Guerrero</option>
+        </select>
+        <select id="fil-seguro" onchange="renderTabla()">
+          <option value="">Todos</option>
+          <option value="SI">Con seguro (SI)</option>
+          <option value="FGA">FGA</option>
+          <option value="N/A">N/A</option>
+        </select>
+        <input type="text" id="fil-asesor" placeholder="Buscar asesor..." oninput="renderTabla()" style="width:140px">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Fecha</th><th>Aliado</th><th>Cédula cliente</th><th>Asesor</th><th>CC aliado</th><th>Monto</th><th>Seguro</th><th></th>
+          </tr></thead>
+          <tbody id="tabla-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-panel" class="panel">
+    <div class="metric-grid" id="metrics-top"></div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-target" aria-hidden="true"></i> Cumplimiento</div>
+      <div id="cumplimiento-detalle"></div>
+      <div class="comision-total">
+        <span class="lbl">Comisión total estimada</span>
+        <span class="val" id="comision-total-val">$0</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-building-store" aria-hidden="true"></i> Por aliado</div>
+      <div id="aliados-detalle"></div>
+    </div>
+  </div>
+
+  <div id="panel-config" class="panel">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-adjustments" aria-hidden="true"></i> Configuración del mes</div>
+      <div class="config-row">
+        <label>Meta de desembolsos ($)</label>
+        <input type="number" id="cfg-meta" value="550000000" onchange="guardarConfig()">
+      </div>
+      <div class="config-row">
+        <label>Meta profundización seguros (%)</label>
+        <input type="number" id="cfg-prof" value="23" step="0.1" onchange="guardarConfig()">
+      </div>
+      <div class="config-row">
+        <label>% Puntos de venta (fijo)</label>
+        <input type="number" id="cfg-pv" value="5" step="0.1" onchange="guardarConfig()">
+      </div>
+      <div class="config-row">
+        <label>Mes / Año</label>
+        <input type="text" id="cfg-mes" value="Mayo 2026" onchange="guardarConfig()">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#A32D2D"><i class="ti ti-trash" aria-hidden="true"></i> Zona de peligro</div>
+      <button class="btn-danger" onclick="limpiarDatos()" style="color:#A32D2D;border-color:#A32D2D">Borrar todos los datos del mes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'desembolsos_data';
+const CONFIG_KEY = 'desembolsos_config';
+
+const RANGOS = [
+  {min:0,    max:0.6,  sinSeg:0,    conSeg:0},
+  {min:0.6,  max:0.7,  sinSeg:700,  conSeg:900},
+  {min:0.7,  max:0.8,  sinSeg:800,  conSeg:1020},
+  {min:0.8,  max:0.9,  sinSeg:1500, conSeg:1920},
+  {min:0.9,  max:1.0,  sinSeg:2790, conSeg:3590},
+  {min:1.0,  max:1.1,  sinSeg:3890, conSeg:5000},
+  {min:1.1,  max:1.2,  sinSeg:4590, conSeg:5890},
+  {min:1.2,  max:1.3,  sinSeg:5290, conSeg:6790},
+  {min:1.3,  max:1.4,  sinSeg:5890, conSeg:7560},
+  {min:1.4,  max:1.5,  sinSeg:6480, conSeg:8330},
+  {min:1.5,  max:999,  sinSeg:7080, conSeg:9100},
+];
+
+function getRango(cum) {
+  return RANGOS.find(r => cum >= r.min && cum < r.max) || RANGOS[RANGOS.length-1];
+}
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString('es-CO'); }
+function pct(n) { return (n*100).toFixed(1) + '%'; }
+
+function getData() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; }
+}
+function setData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+function getConfig() {
+  try {
+    const c = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+    return { meta: c.meta||550000000, prof: c.prof||23, pv: c.pv||5, mes: c.mes||'Mayo 2026' };
+  } catch(e){ return {meta:550000000,prof:23,pv:5,mes:'Mayo 2026'}; }
+}
+function setConfig(c) { localStorage.setItem(CONFIG_KEY, JSON.stringify(c)); }
+
+function guardarConfig() {
+  const c = {
+    meta: parseFloat(document.getElementById('cfg-meta').value)||550000000,
+    prof: parseFloat(document.getElementById('cfg-prof').value)||23,
+    pv: parseFloat(document.getElementById('cfg-pv').value)||5,
+    mes: document.getElementById('cfg-mes').value||'Mayo 2026'
+  };
+  setConfig(c);
+  document.getElementById('mes-label').textContent = c.mes;
+  renderPanel();
+}
+
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.closest('.tab').classList.add('active');
+  if(id==='panel-tabla') renderTabla();
+  if(id==='panel-panel') renderPanel();
+}
+
+function mostrarMsg(txt, tipo) {
+  const el = document.getElementById('msg-area');
+  el.innerHTML = `<div class="msg ${tipo}">${txt}</div>`;
+  setTimeout(()=>el.innerHTML='', 3000);
+}
+
+function agregarDesembolso() {
+  const fecha = document.getElementById('f-fecha').value;
+  const aliado = document.getElementById('f-aliado').value;
+  const cedula = document.getElementById('f-cedula').value;
+  const monto = parseFloat(document.getElementById('f-monto').value);
+  const asesor = document.getElementById('f-asesor').value;
+  const cc = document.getElementById('f-cc').value;
+  const fga = document.getElementById('f-fga').value;
+
+  if(!fecha||!aliado||!monto) { mostrarMsg('Completa fecha, aliado y monto.','error'); return; }
+
+  const datos = getData();
+  datos.push({id:Date.now(), fecha, aliado, cedula, monto, asesor, cc, fga});
+  setData(datos);
+  mostrarMsg('Desembolso agregado correctamente.','success');
+
+  document.getElementById('f-cedula').value='';
+  document.getElementById('f-monto').value='';
+  document.getElementById('f-asesor').value='';
+  document.getElementById('f-cc').value='';
+  document.getElementById('f-fga').value='N/A';
+  document.getElementById('f-aliado').value='';
+  renderUltimos();
+}
+
+function eliminar(id) {
+  if(!confirm('¿Eliminar este registro?')) return;
+  setData(getData().filter(d=>d.id!==id));
+  renderUltimos(); renderTabla(); renderPanel();
+}
+
+function renderUltimos() {
+  const datos = getData().slice(-5).reverse();
+  const el = document.getElementById('ultimos-lista');
+  if(!datos.length){el.innerHTML='<div class="empty">Sin registros aún</div>';return;}
+  el.innerHTML = datos.map(d=>`
+    <div class="aliado-row">
+      <span>${d.fecha} · <b>${d.aliado}</b> · ${d.asesor||'—'}</span>
+      <span style="display:flex;align-items:center;gap:10px">
+        <span class="badge ${d.fga.toLowerCase()}">${d.fga}</span>
+        <span>${fmt(d.monto)}</span>
+        <button class="btn-danger" onclick="eliminar(${d.id})"><i class="ti ti-trash" aria-hidden="true"></i></button>
+      </span>
+    </div>`).join('');
+}
+
+function renderTabla() {
+  let datos = getData();
+  const fa = document.getElementById('fil-aliado').value;
+  const fs = document.getElementById('fil-seguro').value;
+  const fas = document.getElementById('fil-asesor').value.toLowerCase();
+  if(fa) datos = datos.filter(d=>d.aliado===fa);
+  if(fs) datos = datos.filter(d=>d.fga===fs);
+  if(fas) datos = datos.filter(d=>(d.asesor||'').toLowerCase().includes(fas));
+
+  const tbody = document.getElementById('tabla-body');
+  if(!datos.length){tbody.innerHTML='<tr><td colspan="8" class="empty">Sin registros</td></tr>';return;}
+  tbody.innerHTML = datos.map(d=>`<tr>
+    <td>${d.fecha}</td><td>${d.aliado}</td><td>${d.cedula||'—'}</td>
+    <td>${d.asesor||'—'}</td><td>${d.cc||'—'}</td>
+    <td>${fmt(d.monto)}</td>
+    <td><span class="badge ${d.fga.toLowerCase()}">${d.fga}</span></td>
+    <td><button class="btn-danger" onclick="eliminar(${d.id})"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+  </tr>`).join('');
+}
+
+function renderPanel() {
+  const datos = getData();
+  const cfg = getConfig();
+  const meta = cfg.meta;
+  const metaProf = cfg.prof/100;
+  const metaPV = cfg.pv/100;
+
+  const total = datos.reduce((s,d)=>s+d.monto,0);
+  const sinSeg = datos.filter(d=>d.fga!=='SI').reduce((s,d)=>s+d.monto,0);
+  const conSeg = datos.filter(d=>d.fga==='SI').reduce((s,d)=>s+d.monto,0);
+
+  const nSI = datos.filter(d=>d.fga==='SI').length;
+  const nProf = datos.filter(d=>d.fga==='SI'||d.fga==='N/A').length;
+  const pctProf = nProf>0 ? nSI/nProf : 0;
+
+  const cumDes = Math.min(total/meta, 1.5);
+  const cumSeg = Math.min(pctProf/metaProf, 1.5);
+  const cumPV = metaPV;
+  const cumTotal = cumDes*0.6 + cumSeg*0.3 + cumPV;
+
+  const rango = getRango(cumTotal);
+  const comSin = (sinSeg/1000000)*rango.sinSeg;
+  const comCon = (conSeg/1000000)*rango.conSeg;
+  const comTotal = comSin+comCon;
+
+  const hoy = new Date().getDate();
+  const diasMes = new Date(new Date().getFullYear(), new Date().getMonth()+1,0).getDate();
+  const proyeccion = hoy>0 ? (total/hoy)*diasMes : 0;
+
+  document.getElementById('metrics-top').innerHTML = `
+    <div class="metric"><div class="label">Total desembolsado</div><div class="value blue">${fmt(total)}</div></div>
+    <div class="metric"><div class="label">Meta</div><div class="value">${fmt(meta)}</div></div>
+    <div class="metric"><div class="label">Proyección mensual</div><div class="value orange">${fmt(proyeccion)}</div></div>
+    <div class="metric"><div class="label">Cumplimiento total</div><div class="value green">${pct(cumTotal)}</div></div>
+  `;
+
+  const barDes = Math.min(cumDes/1.5*100,100).toFixed(0);
+  const barSeg = Math.min(cumSeg/1.5*100,100).toFixed(0);
+
+  document.getElementById('cumplimiento-detalle').innerHTML = `
+    <div class="section-row"><span class="lbl">% Desembolsos (60%)</span><span class="val">${pct(cumDes)} <small style="color:var(--color-text-secondary);font-weight:400">→ ${pct(cumDes*0.6)} pond.</small></span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${barDes}%"></div></div>
+    <div class="section-row"><span class="lbl">% Seguros (30%) — ${nSI} de ${nProf} profundizables</span><span class="val">${pct(pctProf)} <small style="color:var(--color-text-secondary);font-weight:400">→ ${pct(cumSeg*0.3)} pond.</small></span></div>
+    <div class="progress-bar"><div class="progress-fill ${cumSeg>=1?'green':''}" style="width:${barSeg}%"></div></div>
+    <div class="section-row"><span class="lbl">% Puntos de venta (10%)</span><span class="val">${pct(cumPV)} pond.</span></div>
+    <div class="section-row" style="margin-top:6px"><span class="lbl">Rango comisional</span><span class="val">${pct(rango.min)}–${rango.max>=999?'+150%':pct(rango.max)} · $${rango.sinSeg.toLocaleString()}/M sin seg · $${rango.conSeg.toLocaleString()}/M con seg</span></div>
+    <div class="section-row"><span class="lbl">Comisión sin seguro (${fmt(sinSeg)})</span><span class="val">${fmt(comSin)}</span></div>
+    <div class="section-row"><span class="lbl">Comisión con seguro (${fmt(conSeg)})</span><span class="val">${fmt(comCon)}</span></div>
+  `;
+
+  document.getElementById('comision-total-val').textContent = fmt(comTotal);
+
+  const aliados = ['Carrera Motos','Honda','Motored','KTM','Corbeta','Yamaha','Auteco','Naked','Guerrero'];
+  const porAliado = aliados.map(a=>({
+    nombre:a,
+    total:datos.filter(d=>d.aliado===a).reduce((s,d)=>s+d.monto,0)
+  })).filter(a=>a.total>0).sort((a,b)=>b.total-a.total);
+
+  document.getElementById('aliados-detalle').innerHTML = porAliado.length
+    ? porAliado.map(a=>`<div class="aliado-row"><span>${a.nombre}</span><span>${fmt(a.total)}</span></div>`).join('')
+    : '<div class="empty">Sin datos</div>';
+}
+
+function limpiarDatos() {
+  if(!confirm('¿Seguro que quieres borrar todos los desembolsos del mes? Esta acción no se puede deshacer.')) return;
+  setData([]);
+  mostrarMsg('Datos eliminados.','success');
+  renderUltimos(); renderTabla(); renderPanel();
+}
+
+const cfg = getConfig();
+document.getElementById('cfg-meta').value = cfg.meta;
+document.getElementById('cfg-prof').value = cfg.prof;
+document.getElementById('cfg-pv').value = cfg.pv;
+document.getElementById('cfg-mes').value = cfg.mes;
+document.getElementById('mes-label').textContent = cfg.mes;
+
+const hoy = new Date().toISOString().split('T')[0];
+document.getElementById('f-fecha').value = hoy;
+
+renderUltimos();
+</script>
