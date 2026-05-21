@@ -1,84 +1,104 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desembolsos Banco de Bogotá</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary)}
-.app{display:flex;flex-direction:column;gap:16px;padding:12px 0}
-.header{background:#1F3864;color:#fff;border-radius:var(--border-radius-lg);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
-.header h1{font-size:16px;font-weight:500}
-.header span{font-size:12px;opacity:0.8}
-.tabs{display:flex;gap:8px;border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:0}
-.tab{padding:8px 16px;cursor:pointer;border-radius:var(--border-radius-md) var(--border-radius-md) 0 0;font-size:13px;color:var(--color-text-secondary);border:0.5px solid transparent;border-bottom:none}
-.tab.active{background:var(--color-background-primary);border-color:var(--color-border-tertiary);color:var(--color-text-primary);font-weight:500}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;background:#f4f6f9;color:#1a1a2e;min-height:100vh}
+.app{max-width:960px;margin:0 auto;padding:16px}
+.header{background:#1F3864;color:#fff;border-radius:12px;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.header h1{font-size:17px;font-weight:600;display:flex;align-items:center;gap:8px}
+.header span{font-size:13px;opacity:0.85}
+.tabs{display:flex;gap:0;border-bottom:2px solid #dde3ee;margin-bottom:16px}
+.tab{padding:9px 18px;cursor:pointer;font-size:13px;color:#666;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;display:flex;align-items:center;gap:5px;transition:all 0.15s}
+.tab:hover{color:#1F3864;background:#f0f4ff}
+.tab.active{color:#1F3864;font-weight:600;border-bottom:2px solid #1F3864}
 .panel{display:none}.panel.active{display:block}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:12px}
-.card-title{font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.field{display:flex;flex-direction:column;gap:4px}
-.field label{font-size:12px;color:var(--color-text-secondary)}
-.field input,.field select{width:100%;padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:13px}
-.btn-primary{background:#1F3864;color:#fff;border:none;border-radius:var(--border-radius-md);padding:9px 18px;cursor:pointer;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
-.btn-danger{background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:6px 10px;cursor:pointer;font-size:12px;color:var(--color-text-secondary)}
-.btn-danger:hover{color:#E24B4A;border-color:#E24B4A}
-.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
-.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px}
-.metric .label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
-.metric .value{font-size:18px;font-weight:500}
-.metric .value.green{color:#1D9E75}
-.metric .value.blue{color:#185FA5}
-.metric .value.orange{color:#BA7517}
-.progress-bar{height:8px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden;margin:6px 0}
-.progress-fill{height:100%;border-radius:4px;background:#1F3864;transition:width 0.3s}
-.progress-fill.green{background:#1D9E75}
-.progress-fill.orange{background:#BA7517}
+.card{background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
+.card-title{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;color:#555;font-weight:500}
+.field input,.field select{width:100%;padding:8px 11px;border:1px solid #cdd3dc;border-radius:8px;background:#fff;color:#1a1a2e;font-size:13px;outline:none;transition:border 0.15s}
+.field input:focus,.field select:focus{border-color:#1F3864;box-shadow:0 0 0 3px rgba(31,56,100,0.08)}
+.btn-primary{background:#1F3864;color:#fff;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:background 0.15s}
+.btn-primary:hover{background:#162d52}
+.btn-danger{background:none;border:1px solid #dde3ee;border-radius:6px;padding:5px 9px;cursor:pointer;font-size:12px;color:#999;transition:all 0.15s}
+.btn-danger:hover{color:#c0392b;border-color:#c0392b}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.metric{background:#fff;border:1px solid #dde3ee;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.metric .label{font-size:11px;color:#888;margin-bottom:5px;font-weight:500}
+.metric .value{font-size:20px;font-weight:600}
+.metric .value.green{color:#1a8a5a}
+.metric .value.blue{color:#1F3864}
+.metric .value.orange{color:#d4870a}
+.progress-bar{height:7px;background:#eef0f5;border-radius:4px;overflow:hidden;margin:6px 0 12px}
+.progress-fill{height:100%;border-radius:4px;background:#1F3864;transition:width 0.4s}
+.progress-fill.green{background:#1a8a5a}
+.progress-fill.orange{background:#d4870a}
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{background:#1F3864;color:#fff;padding:8px 10px;text-align:left;font-weight:500;white-space:nowrap}
-td{padding:7px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary)}
-tr:nth-child(even) td{background:var(--color-background-secondary)}
-.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
-.badge.si{background:#EAF3DE;color:#3B6D11}
-.badge.fga{background:#FAEEDA;color:#854F0B}
-.badge.na{background:#F1EFE8;color:#5F5E5A}
-.section-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#1F3864;color:#fff;padding:9px 12px;text-align:left;font-weight:600;white-space:nowrap}
+th:first-child{border-radius:8px 0 0 0}
+th:last-child{border-radius:0 8px 0 0}
+td{padding:8px 12px;border-bottom:1px solid #f0f2f7;color:#1a1a2e}
+tr:hover td{background:#f7f9ff}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.badge.si{background:#d4edda;color:#155724}
+.badge.fga{background:#fff3cd;color:#856404}
+.badge.na{background:#e9ecef;color:#495057}
+.section-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f2f7}
 .section-row:last-child{border-bottom:none}
-.section-row .lbl{color:var(--color-text-secondary);font-size:13px}
-.section-row .val{font-weight:500;font-size:13px}
-.comision-total{background:#1E6B3C;color:#fff;border-radius:var(--border-radius-md);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-.comision-total .lbl{font-size:13px;opacity:0.9}
-.comision-total .val{font-size:20px;font-weight:500}
-.aliado-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.section-row .lbl{color:#555;font-size:13px}
+.section-row .val{font-weight:600;font-size:13px}
+.comision-total{background:#1a8a5a;color:#fff;border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.comision-total .lbl{font-size:14px;opacity:0.92}
+.comision-total .val{font-size:22px;font-weight:700}
+.aliado-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0f2f7;font-size:13px}
 .aliado-row:last-child{border-bottom:none}
-.msg{padding:8px 12px;border-radius:var(--border-radius-md);font-size:13px;margin-bottom:10px}
-.msg.success{background:#EAF3DE;color:#3B6D11}
-.msg.error{background:#FCEBEB;color:#A32D2D}
-.empty{text-align:center;padding:32px;color:var(--color-text-secondary);font-size:13px}
-.config-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.msg{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;font-weight:500}
+.msg.success{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.msg.error{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+.empty{text-align:center;padding:36px;color:#999;font-size:13px}
+.config-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #f0f2f7}
 .config-row:last-child{border-bottom:none}
-.config-row label{font-size:13px;color:var(--color-text-secondary)}
-.config-row input{width:160px;padding:6px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:13px;text-align:right}
-.filter-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.filter-row select,.filter-row input{padding:6px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:12px}
+.config-row label{font-size:13px;color:#555}
+.config-row input{width:180px;padding:7px 11px;border:1px solid #cdd3dc;border-radius:8px;background:#fff;color:#1a1a2e;font-size:13px;text-align:right;outline:none}
+.config-row input:focus{border-color:#1F3864}
+.filter-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.filter-row select,.filter-row input{padding:7px 11px;border:1px solid #cdd3dc;border-radius:8px;background:#fff;color:#1a1a2e;font-size:12px;outline:none}
+.danger-zone{border:1px solid #f5c6cb;border-radius:10px;padding:14px;background:#fff8f8}
+.danger-zone .card-title{color:#c0392b}
+@media(max-width:600px){
+  .metric-grid{grid-template-columns:1fr 1fr}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .filter-row{flex-direction:column}
+}
 </style>
-
+</head>
+<body>
 <div class="app">
   <div class="header">
-    <h1><i class="ti ti-chart-bar" aria-hidden="true"></i> Desembolsos Banco de Bogotá</h1>
+    <h1><i class="ti ti-chart-bar"></i> Desembolsos Banco de Bogotá</h1>
     <span id="mes-label">Mayo 2026</span>
   </div>
 
   <div class="tabs">
-    <div class="tab active" onclick="showTab('panel-registros')"><i class="ti ti-plus" aria-hidden="true"></i> Registrar</div>
-    <div class="tab" onclick="showTab('panel-tabla')"><i class="ti ti-list" aria-hidden="true"></i> Tabla</div>
-    <div class="tab" onclick="showTab('panel-panel')"><i class="ti ti-dashboard" aria-hidden="true"></i> Panel</div>
-    <div class="tab" onclick="showTab('panel-config')"><i class="ti ti-settings" aria-hidden="true"></i> Config</div>
+    <button class="tab active" onclick="showTab('panel-registros',this)"><i class="ti ti-plus"></i> Registrar</button>
+    <button class="tab" onclick="showTab('panel-tabla',this)"><i class="ti ti-list"></i> Tabla</button>
+    <button class="tab" onclick="showTab('panel-panel',this)"><i class="ti ti-layout-dashboard"></i> Panel</button>
+    <button class="tab" onclick="showTab('panel-config',this)"><i class="ti ti-settings"></i> Config</button>
   </div>
 
   <div id="panel-registros" class="panel active">
     <div id="msg-area"></div>
     <div class="card">
-      <div class="card-title"><i class="ti ti-file-plus" aria-hidden="true"></i> Nuevo desembolso</div>
-      <div class="grid2" style="margin-bottom:10px">
+      <div class="card-title"><i class="ti ti-file-plus"></i> Nuevo desembolso</div>
+      <div class="grid2" style="margin-bottom:12px">
         <div class="field"><label>Fecha</label><input type="date" id="f-fecha"></div>
         <div class="field"><label>Aliado</label>
           <select id="f-aliado">
@@ -89,11 +109,11 @@ tr:nth-child(even) td{background:var(--color-background-secondary)}
           </select>
         </div>
       </div>
-      <div class="grid2" style="margin-bottom:10px">
+      <div class="grid2" style="margin-bottom:12px">
         <div class="field"><label>Cédula cliente</label><input type="number" id="f-cedula" placeholder="Número de cédula"></div>
         <div class="field"><label>Monto ($)</label><input type="number" id="f-monto" placeholder="Ej: 15000000"></div>
       </div>
-      <div class="grid3" style="margin-bottom:14px">
+      <div class="grid3" style="margin-bottom:16px">
         <div class="field"><label>Asesor aliado</label><input type="text" id="f-asesor" placeholder="Nombre"></div>
         <div class="field"><label>CC aliado</label><input type="number" id="f-cc" placeholder="Cédula asesor"></div>
         <div class="field"><label>FGA / Seguro</label>
@@ -104,18 +124,17 @@ tr:nth-child(even) td{background:var(--color-background-secondary)}
           </select>
         </div>
       </div>
-      <button class="btn-primary" onclick="agregarDesembolso()"><i class="ti ti-plus" aria-hidden="true"></i> Agregar desembolso</button>
+      <button class="btn-primary" onclick="agregarDesembolso()"><i class="ti ti-plus"></i> Agregar desembolso</button>
     </div>
-
     <div class="card">
-      <div class="card-title"><i class="ti ti-clock" aria-hidden="true"></i> Últimos registros</div>
+      <div class="card-title"><i class="ti ti-clock"></i> Últimos registros</div>
       <div id="ultimos-lista"></div>
     </div>
   </div>
 
   <div id="panel-tabla" class="panel">
     <div class="card">
-      <div class="card-title"><i class="ti ti-filter" aria-hidden="true"></i> Filtros</div>
+      <div class="card-title"><i class="ti ti-filter"></i> Filtros</div>
       <div class="filter-row">
         <select id="fil-aliado" onchange="renderTabla()">
           <option value="">Todos los aliados</option>
@@ -129,7 +148,7 @@ tr:nth-child(even) td{background:var(--color-background-secondary)}
           <option value="FGA">FGA</option>
           <option value="N/A">N/A</option>
         </select>
-        <input type="text" id="fil-asesor" placeholder="Buscar asesor..." oninput="renderTabla()" style="width:140px">
+        <input type="text" id="fil-asesor" placeholder="Buscar asesor..." oninput="renderTabla()" style="width:160px">
       </div>
       <div class="table-wrap">
         <table>
@@ -144,25 +163,23 @@ tr:nth-child(even) td{background:var(--color-background-secondary)}
 
   <div id="panel-panel" class="panel">
     <div class="metric-grid" id="metrics-top"></div>
-
     <div class="card">
-      <div class="card-title"><i class="ti ti-target" aria-hidden="true"></i> Cumplimiento</div>
+      <div class="card-title"><i class="ti ti-target"></i> Cumplimiento</div>
       <div id="cumplimiento-detalle"></div>
       <div class="comision-total">
         <span class="lbl">Comisión total estimada</span>
         <span class="val" id="comision-total-val">$0</span>
       </div>
     </div>
-
     <div class="card">
-      <div class="card-title"><i class="ti ti-building-store" aria-hidden="true"></i> Por aliado</div>
+      <div class="card-title"><i class="ti ti-building-store"></i> Por aliado</div>
       <div id="aliados-detalle"></div>
     </div>
   </div>
 
   <div id="panel-config" class="panel">
     <div class="card">
-      <div class="card-title"><i class="ti ti-adjustments" aria-hidden="true"></i> Configuración del mes</div>
+      <div class="card-title"><i class="ti ti-adjustments"></i> Configuración del mes</div>
       <div class="config-row">
         <label>Meta de desembolsos ($)</label>
         <input type="number" id="cfg-meta" value="550000000" onchange="guardarConfig()">
@@ -180,94 +197,89 @@ tr:nth-child(even) td{background:var(--color-background-secondary)}
         <input type="text" id="cfg-mes" value="Mayo 2026" onchange="guardarConfig()">
       </div>
     </div>
-    <div class="card">
-      <div class="card-title" style="color:#A32D2D"><i class="ti ti-trash" aria-hidden="true"></i> Zona de peligro</div>
-      <button class="btn-danger" onclick="limpiarDatos()" style="color:#A32D2D;border-color:#A32D2D">Borrar todos los datos del mes</button>
+    <div class="card danger-zone">
+      <div class="card-title"><i class="ti ti-trash"></i> Zona de peligro</div>
+      <p style="font-size:13px;color:#666;margin-bottom:12px">Esta acción elimina todos los desembolsos registrados y no se puede deshacer.</p>
+      <button class="btn-primary" onclick="limpiarDatos()" style="background:#c0392b">
+        <i class="ti ti-trash"></i> Borrar todos los datos del mes
+      </button>
     </div>
   </div>
 </div>
 
 <script>
-const STORAGE_KEY = 'desembolsos_data';
-const CONFIG_KEY = 'desembolsos_config';
+const STORAGE_KEY='desembolsos_data';
+const CONFIG_KEY='desembolsos_config';
 
-const RANGOS = [
-  {min:0,    max:0.6,  sinSeg:0,    conSeg:0},
-  {min:0.6,  max:0.7,  sinSeg:700,  conSeg:900},
-  {min:0.7,  max:0.8,  sinSeg:800,  conSeg:1020},
-  {min:0.8,  max:0.9,  sinSeg:1500, conSeg:1920},
-  {min:0.9,  max:1.0,  sinSeg:2790, conSeg:3590},
-  {min:1.0,  max:1.1,  sinSeg:3890, conSeg:5000},
-  {min:1.1,  max:1.2,  sinSeg:4590, conSeg:5890},
-  {min:1.2,  max:1.3,  sinSeg:5290, conSeg:6790},
-  {min:1.3,  max:1.4,  sinSeg:5890, conSeg:7560},
-  {min:1.4,  max:1.5,  sinSeg:6480, conSeg:8330},
-  {min:1.5,  max:999,  sinSeg:7080, conSeg:9100},
+const RANGOS=[
+  {min:0,max:0.6,sinSeg:0,conSeg:0},
+  {min:0.6,max:0.7,sinSeg:700,conSeg:900},
+  {min:0.7,max:0.8,sinSeg:800,conSeg:1020},
+  {min:0.8,max:0.9,sinSeg:1500,conSeg:1920},
+  {min:0.9,max:1.0,sinSeg:2790,conSeg:3590},
+  {min:1.0,max:1.1,sinSeg:3890,conSeg:5000},
+  {min:1.1,max:1.2,sinSeg:4590,conSeg:5890},
+  {min:1.2,max:1.3,sinSeg:5290,conSeg:6790},
+  {min:1.3,max:1.4,sinSeg:5890,conSeg:7560},
+  {min:1.4,max:1.5,sinSeg:6480,conSeg:8330},
+  {min:1.5,max:999,sinSeg:7080,conSeg:9100},
 ];
 
-function getRango(cum) {
-  return RANGOS.find(r => cum >= r.min && cum < r.max) || RANGOS[RANGOS.length-1];
+function getRango(c){return RANGOS.find(r=>c>=r.min&&c<r.max)||RANGOS[RANGOS.length-1];}
+function fmt(n){'use strict';return '$'+Math.round(n).toLocaleString('es-CO');}
+function pct(n){return (n*100).toFixed(1)+'%';}
+
+function getData(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');}catch(e){return[];}}
+function setData(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d));}
+
+function getConfig(){
+  try{
+    const c=JSON.parse(localStorage.getItem(CONFIG_KEY)||'{}');
+    return{meta:c.meta||550000000,prof:c.prof||23,pv:c.pv||5,mes:c.mes||'Mayo 2026'};
+  }catch(e){return{meta:550000000,prof:23,pv:5,mes:'Mayo 2026'};}
 }
+function setConfig(c){localStorage.setItem(CONFIG_KEY,JSON.stringify(c));}
 
-function fmt(n) { return '$' + Math.round(n).toLocaleString('es-CO'); }
-function pct(n) { return (n*100).toFixed(1) + '%'; }
-
-function getData() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; }
-}
-function setData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
-
-function getConfig() {
-  try {
-    const c = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
-    return { meta: c.meta||550000000, prof: c.prof||23, pv: c.pv||5, mes: c.mes||'Mayo 2026' };
-  } catch(e){ return {meta:550000000,prof:23,pv:5,mes:'Mayo 2026'}; }
-}
-function setConfig(c) { localStorage.setItem(CONFIG_KEY, JSON.stringify(c)); }
-
-function guardarConfig() {
-  const c = {
-    meta: parseFloat(document.getElementById('cfg-meta').value)||550000000,
-    prof: parseFloat(document.getElementById('cfg-prof').value)||23,
-    pv: parseFloat(document.getElementById('cfg-pv').value)||5,
-    mes: document.getElementById('cfg-mes').value||'Mayo 2026'
+function guardarConfig(){
+  const c={
+    meta:parseFloat(document.getElementById('cfg-meta').value)||550000000,
+    prof:parseFloat(document.getElementById('cfg-prof').value)||23,
+    pv:parseFloat(document.getElementById('cfg-pv').value)||5,
+    mes:document.getElementById('cfg-mes').value||'Mayo 2026'
   };
   setConfig(c);
-  document.getElementById('mes-label').textContent = c.mes;
+  document.getElementById('mes-label').textContent=c.mes;
   renderPanel();
 }
 
-function showTab(id) {
+function showTab(id,el){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.closest('.tab').classList.add('active');
-  if(id==='panel-tabla') renderTabla();
-  if(id==='panel-panel') renderPanel();
+  el.classList.add('active');
+  if(id==='panel-tabla')renderTabla();
+  if(id==='panel-panel')renderPanel();
 }
 
-function mostrarMsg(txt, tipo) {
-  const el = document.getElementById('msg-area');
-  el.innerHTML = `<div class="msg ${tipo}">${txt}</div>`;
-  setTimeout(()=>el.innerHTML='', 3000);
+function mostrarMsg(txt,tipo){
+  const el=document.getElementById('msg-area');
+  el.innerHTML=`<div class="msg ${tipo}">${txt}</div>`;
+  setTimeout(()=>el.innerHTML='',3000);
 }
 
-function agregarDesembolso() {
-  const fecha = document.getElementById('f-fecha').value;
-  const aliado = document.getElementById('f-aliado').value;
-  const cedula = document.getElementById('f-cedula').value;
-  const monto = parseFloat(document.getElementById('f-monto').value);
-  const asesor = document.getElementById('f-asesor').value;
-  const cc = document.getElementById('f-cc').value;
-  const fga = document.getElementById('f-fga').value;
-
-  if(!fecha||!aliado||!monto) { mostrarMsg('Completa fecha, aliado y monto.','error'); return; }
-
-  const datos = getData();
-  datos.push({id:Date.now(), fecha, aliado, cedula, monto, asesor, cc, fga});
+function agregarDesembolso(){
+  const fecha=document.getElementById('f-fecha').value;
+  const aliado=document.getElementById('f-aliado').value;
+  const cedula=document.getElementById('f-cedula').value;
+  const monto=parseFloat(document.getElementById('f-monto').value);
+  const asesor=document.getElementById('f-asesor').value;
+  const cc=document.getElementById('f-cc').value;
+  const fga=document.getElementById('f-fga').value;
+  if(!fecha||!aliado||!monto){mostrarMsg('Completa fecha, aliado y monto.','error');return;}
+  const datos=getData();
+  datos.push({id:Date.now(),fecha,aliado,cedula,monto,asesor,cc,fga});
   setData(datos);
   mostrarMsg('Desembolso agregado correctamente.','success');
-
   document.getElementById('f-cedula').value='';
   document.getElementById('f-monto').value='';
   document.getElementById('f-asesor').value='';
@@ -277,126 +289,119 @@ function agregarDesembolso() {
   renderUltimos();
 }
 
-function eliminar(id) {
-  if(!confirm('¿Eliminar este registro?')) return;
+function eliminar(id){
+  if(!confirm('¿Eliminar este registro?'))return;
   setData(getData().filter(d=>d.id!==id));
-  renderUltimos(); renderTabla(); renderPanel();
+  renderUltimos();renderTabla();renderPanel();
 }
 
-function renderUltimos() {
-  const datos = getData().slice(-5).reverse();
-  const el = document.getElementById('ultimos-lista');
+function renderUltimos(){
+  const datos=getData().slice(-5).reverse();
+  const el=document.getElementById('ultimos-lista');
   if(!datos.length){el.innerHTML='<div class="empty">Sin registros aún</div>';return;}
-  el.innerHTML = datos.map(d=>`
+  el.innerHTML=datos.map(d=>`
     <div class="aliado-row">
       <span>${d.fecha} · <b>${d.aliado}</b> · ${d.asesor||'—'}</span>
       <span style="display:flex;align-items:center;gap:10px">
         <span class="badge ${d.fga.toLowerCase()}">${d.fga}</span>
         <span>${fmt(d.monto)}</span>
-        <button class="btn-danger" onclick="eliminar(${d.id})"><i class="ti ti-trash" aria-hidden="true"></i></button>
+        <button class="btn-danger" onclick="eliminar(${d.id})"><i class="ti ti-trash"></i></button>
       </span>
     </div>`).join('');
 }
 
-function renderTabla() {
-  let datos = getData();
-  const fa = document.getElementById('fil-aliado').value;
-  const fs = document.getElementById('fil-seguro').value;
-  const fas = document.getElementById('fil-asesor').value.toLowerCase();
-  if(fa) datos = datos.filter(d=>d.aliado===fa);
-  if(fs) datos = datos.filter(d=>d.fga===fs);
-  if(fas) datos = datos.filter(d=>(d.asesor||'').toLowerCase().includes(fas));
-
-  const tbody = document.getElementById('tabla-body');
+function renderTabla(){
+  let datos=getData();
+  const fa=document.getElementById('fil-aliado').value;
+  const fs=document.getElementById('fil-seguro').value;
+  const fas=document.getElementById('fil-asesor').value.toLowerCase();
+  if(fa)datos=datos.filter(d=>d.aliado===fa);
+  if(fs)datos=datos.filter(d=>d.fga===fs);
+  if(fas)datos=datos.filter(d=>(d.asesor||'').toLowerCase().includes(fas));
+  const tbody=document.getElementById('tabla-body');
   if(!datos.length){tbody.innerHTML='<tr><td colspan="8" class="empty">Sin registros</td></tr>';return;}
-  tbody.innerHTML = datos.map(d=>`<tr>
+  tbody.innerHTML=datos.map(d=>`<tr>
     <td>${d.fecha}</td><td>${d.aliado}</td><td>${d.cedula||'—'}</td>
     <td>${d.asesor||'—'}</td><td>${d.cc||'—'}</td>
     <td>${fmt(d.monto)}</td>
     <td><span class="badge ${d.fga.toLowerCase()}">${d.fga}</span></td>
-    <td><button class="btn-danger" onclick="eliminar(${d.id})"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+    <td><button class="btn-danger" onclick="eliminar(${d.id})"><i class="ti ti-trash"></i></button></td>
   </tr>`).join('');
 }
 
-function renderPanel() {
-  const datos = getData();
-  const cfg = getConfig();
-  const meta = cfg.meta;
-  const metaProf = cfg.prof/100;
-  const metaPV = cfg.pv/100;
+function renderPanel(){
+  const datos=getData();
+  const cfg=getConfig();
+  const meta=cfg.meta;
+  const metaProf=cfg.prof/100;
+  const metaPV=cfg.pv/100;
+  const total=datos.reduce((s,d)=>s+d.monto,0);
+  const sinSeg=datos.filter(d=>d.fga!=='SI').reduce((s,d)=>s+d.monto,0);
+  const conSeg=datos.filter(d=>d.fga==='SI').reduce((s,d)=>s+d.monto,0);
+  const nSI=datos.filter(d=>d.fga==='SI').length;
+  const nProf=datos.filter(d=>d.fga==='SI'||d.fga==='N/A').length;
+  const pctProf=nProf>0?nSI/nProf:0;
+  const cumDes=Math.min(total/meta,1.5);
+  const cumSeg=Math.min(pctProf/metaProf,1.5);
+  const cumPV=metaPV;
+  const cumTotal=cumDes*0.6+cumSeg*0.3+cumPV;
+  const rango=getRango(cumTotal);
+  const comSin=(sinSeg/1000000)*rango.sinSeg;
+  const comCon=(conSeg/1000000)*rango.conSeg;
+  const comTotal=comSin+comCon;
+  const hoy=new Date().getDate();
+  const diasMes=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate();
+  const proyeccion=hoy>0?(total/hoy)*diasMes:0;
 
-  const total = datos.reduce((s,d)=>s+d.monto,0);
-  const sinSeg = datos.filter(d=>d.fga!=='SI').reduce((s,d)=>s+d.monto,0);
-  const conSeg = datos.filter(d=>d.fga==='SI').reduce((s,d)=>s+d.monto,0);
-
-  const nSI = datos.filter(d=>d.fga==='SI').length;
-  const nProf = datos.filter(d=>d.fga==='SI'||d.fga==='N/A').length;
-  const pctProf = nProf>0 ? nSI/nProf : 0;
-
-  const cumDes = Math.min(total/meta, 1.5);
-  const cumSeg = Math.min(pctProf/metaProf, 1.5);
-  const cumPV = metaPV;
-  const cumTotal = cumDes*0.6 + cumSeg*0.3 + cumPV;
-
-  const rango = getRango(cumTotal);
-  const comSin = (sinSeg/1000000)*rango.sinSeg;
-  const comCon = (conSeg/1000000)*rango.conSeg;
-  const comTotal = comSin+comCon;
-
-  const hoy = new Date().getDate();
-  const diasMes = new Date(new Date().getFullYear(), new Date().getMonth()+1,0).getDate();
-  const proyeccion = hoy>0 ? (total/hoy)*diasMes : 0;
-
-  document.getElementById('metrics-top').innerHTML = `
+  document.getElementById('metrics-top').innerHTML=`
     <div class="metric"><div class="label">Total desembolsado</div><div class="value blue">${fmt(total)}</div></div>
     <div class="metric"><div class="label">Meta</div><div class="value">${fmt(meta)}</div></div>
     <div class="metric"><div class="label">Proyección mensual</div><div class="value orange">${fmt(proyeccion)}</div></div>
     <div class="metric"><div class="label">Cumplimiento total</div><div class="value green">${pct(cumTotal)}</div></div>
   `;
 
-  const barDes = Math.min(cumDes/1.5*100,100).toFixed(0);
-  const barSeg = Math.min(cumSeg/1.5*100,100).toFixed(0);
+  const barDes=Math.min(cumDes/1.5*100,100).toFixed(0);
+  const barSeg=Math.min(cumSeg/1.5*100,100).toFixed(0);
 
-  document.getElementById('cumplimiento-detalle').innerHTML = `
-    <div class="section-row"><span class="lbl">% Desembolsos (60%)</span><span class="val">${pct(cumDes)} <small style="color:var(--color-text-secondary);font-weight:400">→ ${pct(cumDes*0.6)} pond.</small></span></div>
+  document.getElementById('cumplimiento-detalle').innerHTML=`
+    <div class="section-row"><span class="lbl">% Desembolsos (60%)</span><span class="val">${pct(cumDes)} <small style="color:#888;font-weight:400">→ ${pct(cumDes*0.6)} ponderado</small></span></div>
     <div class="progress-bar"><div class="progress-fill" style="width:${barDes}%"></div></div>
-    <div class="section-row"><span class="lbl">% Seguros (30%) — ${nSI} de ${nProf} profundizables</span><span class="val">${pct(pctProf)} <small style="color:var(--color-text-secondary);font-weight:400">→ ${pct(cumSeg*0.3)} pond.</small></span></div>
+    <div class="section-row"><span class="lbl">% Seguros (30%) — ${nSI} de ${nProf} profundizables</span><span class="val">${pct(pctProf)} <small style="color:#888;font-weight:400">→ ${pct(cumSeg*0.3)} ponderado</small></span></div>
     <div class="progress-bar"><div class="progress-fill ${cumSeg>=1?'green':''}" style="width:${barSeg}%"></div></div>
-    <div class="section-row"><span class="lbl">% Puntos de venta (10%)</span><span class="val">${pct(cumPV)} pond.</span></div>
-    <div class="section-row" style="margin-top:6px"><span class="lbl">Rango comisional</span><span class="val">${pct(rango.min)}–${rango.max>=999?'+150%':pct(rango.max)} · $${rango.sinSeg.toLocaleString()}/M sin seg · $${rango.conSeg.toLocaleString()}/M con seg</span></div>
+    <div class="section-row"><span class="lbl">% Puntos de venta (10%)</span><span class="val">${pct(cumPV)} ponderado</span></div>
+    <div class="section-row" style="margin-top:4px"><span class="lbl">Rango comisional activo</span><span class="val">${pct(rango.min)}–${rango.max>=999?'+150%':pct(rango.max)} · $${rango.sinSeg.toLocaleString('es-CO')}/M sin seg · $${rango.conSeg.toLocaleString('es-CO')}/M con seg</span></div>
     <div class="section-row"><span class="lbl">Comisión sin seguro (${fmt(sinSeg)})</span><span class="val">${fmt(comSin)}</span></div>
     <div class="section-row"><span class="lbl">Comisión con seguro (${fmt(conSeg)})</span><span class="val">${fmt(comCon)}</span></div>
   `;
 
-  document.getElementById('comision-total-val').textContent = fmt(comTotal);
+  document.getElementById('comision-total-val').textContent=fmt(comTotal);
 
-  const aliados = ['Carrera Motos','Honda','Motored','KTM','Corbeta','Yamaha','Auteco','Naked','Guerrero'];
-  const porAliado = aliados.map(a=>({
+  const aliados=['Carrera Motos','Honda','Motored','KTM','Corbeta','Yamaha','Auteco','Naked','Guerrero'];
+  const porAliado=aliados.map(a=>({
     nombre:a,
     total:datos.filter(d=>d.aliado===a).reduce((s,d)=>s+d.monto,0)
   })).filter(a=>a.total>0).sort((a,b)=>b.total-a.total);
 
-  document.getElementById('aliados-detalle').innerHTML = porAliado.length
-    ? porAliado.map(a=>`<div class="aliado-row"><span>${a.nombre}</span><span>${fmt(a.total)}</span></div>`).join('')
-    : '<div class="empty">Sin datos</div>';
+  document.getElementById('aliados-detalle').innerHTML=porAliado.length
+    ?porAliado.map(a=>`<div class="aliado-row"><span>${a.nombre}</span><span>${fmt(a.total)}</span></div>`).join('')
+    :'<div class="empty">Sin datos</div>';
 }
 
-function limpiarDatos() {
-  if(!confirm('¿Seguro que quieres borrar todos los desembolsos del mes? Esta acción no se puede deshacer.')) return;
+function limpiarDatos(){
+  if(!confirm('¿Seguro que quieres borrar todos los desembolsos? Esta acción no se puede deshacer.'))return;
   setData([]);
   mostrarMsg('Datos eliminados.','success');
-  renderUltimos(); renderTabla(); renderPanel();
+  renderUltimos();renderTabla();renderPanel();
 }
 
-const cfg = getConfig();
-document.getElementById('cfg-meta').value = cfg.meta;
-document.getElementById('cfg-prof').value = cfg.prof;
-document.getElementById('cfg-pv').value = cfg.pv;
-document.getElementById('cfg-mes').value = cfg.mes;
-document.getElementById('mes-label').textContent = cfg.mes;
-
-const hoy = new Date().toISOString().split('T')[0];
-document.getElementById('f-fecha').value = hoy;
-
+const cfg=getConfig();
+document.getElementById('cfg-meta').value=cfg.meta;
+document.getElementById('cfg-prof').value=cfg.prof;
+document.getElementById('cfg-pv').value=cfg.pv;
+document.getElementById('cfg-mes').value=cfg.mes;
+document.getElementById('mes-label').textContent=cfg.mes;
+document.getElementById('f-fecha').value=new Date().toISOString().split('T')[0];
 renderUltimos();
 </script>
+</body>
+</html>
